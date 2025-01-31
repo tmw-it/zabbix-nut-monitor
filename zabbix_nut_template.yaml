@@ -52,39 +52,6 @@ zabbix_export:
                   tag: Application
                   value: UPS
             -
-              uuid: 3b8ad82e3c7c458281c3cd3e8fe5c605
-              name: 'UPS {#UPSNAME} Input Transfer High'
-              key: 'upsmon[{#UPSNAME},input.transfer.high]'
-              delay: '30'
-              value_type: FLOAT
-              units: Volts
-              tags:
-                -
-                  tag: Application
-                  value: UPS
-            -
-              uuid: 077680a689094d65a8e7982768b5018e
-              name: 'UPS {#UPSNAME} Input Transfer Low'
-              key: 'upsmon[{#UPSNAME},input.transfer.low]'
-              delay: '30'
-              value_type: FLOAT
-              units: Volts
-              tags:
-                -
-                  tag: Application
-                  value: UPS
-            -
-              uuid: 07adabb5f9054684a48e8be725635a25
-              name: 'UPS {#UPSNAME} Outlet Power'
-              key: 'upsmon[{#UPSNAME},outlet.power]'
-              delay: '10'
-              value_type: FLOAT
-              units: VA
-              tags:
-                -
-                  tag: Application
-                  value: UPS
-            -
               uuid: 68d44e57a2684e9281ede41e6232e2a2
               name: 'UPS {#UPSNAME} Output Voltage'
               key: 'upsmon[{#UPSNAME},output.voltage]'
@@ -109,7 +76,7 @@ zabbix_export:
             -
               uuid: aa79568a5c7c4c8aa616f8968cc6b4e2
               name: 'UPS {#UPSNAME} Real Power'
-              key: 'upsmon[{#UPSNAME},ups.realpower]'
+              key: 'upsmon[{#UPSNAME},ups.realpower.nominal]'
               delay: '10'
               value_type: FLOAT
               units: Watts
@@ -213,35 +180,15 @@ zabbix_export:
                     host: 'Template UPS'
                     key: 'upsmon[{#UPSNAME},ups.load]'
             -
-              uuid: 9e31e23af6584796a880c3573e65b34d
-              name: 'UPS {#UPSNAME} Outlet Power'
-              graph_items:
-                -
-                  color: C80000
-                  item:
-                    host: 'Template UPS'
-                    key: 'upsmon[{#UPSNAME},outlet.power]'
-            -
               uuid: c2447259055f43d79200c78c1af28c7a
               name: 'UPS {#UPSNAME} Voltage'
               graph_items:
-                -
-                  color: C80000
-                  item:
-                    host: 'Template UPS'
-                    key: 'upsmon[{#UPSNAME},input.transfer.low]'
                 -
                   sortorder: '1'
                   color: 00C800
                   item:
                     host: 'Template UPS'
                     key: 'upsmon[{#UPSNAME},output.voltage]'
-                -
-                  sortorder: '2'
-                  color: '274482'
-                  item:
-                    host: 'Template UPS'
-                    key: 'upsmon[{#UPSNAME},input.transfer.high]'
       valuemaps:
         -
           uuid: 4ca6506cc5464c7cb7ec54aaa53fccf9

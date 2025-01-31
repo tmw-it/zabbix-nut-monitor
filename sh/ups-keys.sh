@@ -7,7 +7,7 @@ if [[ $ups = ups.discovery ]]; then
 
     echo -e "{\n\t\"data\":["
     first=1
-    $upscbin -l 2>&1 | grep -v SSL | while read discovered ; do
+    upsc -l 2>&1 | grep -v SSL | while read discovered ; do
         if [ $first -eq 0 ]; then
             echo -e ","
         fi
