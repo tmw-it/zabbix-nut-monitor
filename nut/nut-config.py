@@ -205,6 +205,23 @@ def process_template(template_path, output_path, config):
     except Exception as e:
         print(f"Error writing output file {output_path}: {e}")
 
+def backup_nut_files():
+    """Backup existing files in /etc/nut to /etc/nut/bak."""
+    # Ensure the backup directory exists
+    backup_dir = "/etc/nut/bak"
+    os.makedirs(backup_dir, exist_ok=True)
+
+    # Backup existing files in /etc/nut
+    nut_dir = "/etc/nut"
+    for item in os.listdir(nut_dir):
+        item_path = os.path.join(nut_dir, item)
+        if os.path.isfile(item_path) or os.path.isdir(item_path):
+            shutil.move(item_path, os.path.join(backup_dir, item))
+            print(f"✓ Backed up: {item_path} to {backup_dir}/{item}")
+
+# Call the backup function immediately after defining it
+backup_nut_files()
+
 def copy_static_files(script_dir):
     """Copy static configuration files that don't need processing"""
     static_files = [

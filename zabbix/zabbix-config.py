@@ -79,13 +79,15 @@ def configure_zabbix_agent():
     hostname = get_hostname()
     server_ip = get_zabbix_server_ip()
     
-    # Create backup of original config
-    config_file = "/etc/zabbix/zabbix_agent.conf"
-    backup_file = "/etc/zabbix/zabbix_agent.conf.bak"
+    # Create backup directory if it doesn't exist
+    backup_dir = "/etc/zabbix/bak"
+    os.makedirs(backup_dir, exist_ok=True)
     
+    # Move original config to backup directory
+    config_file = "/etc/zabbix/zabbix_agentd.conf"
     if os.path.exists(config_file):
-        shutil.copy2(config_file, backup_file)
-        print(f"✓ Created backup of original config: {backup_file}")
+        shutil.move(config_file, os.path.join(backup_dir, "zabbix_agentd.conf"))
+        print(f"✓ Moved original config to backup directory: {backup_dir}/zabbix_agentd.conf")
     
     # Update configuration
     try:
@@ -121,8 +123,8 @@ def configure_zabbix_agent():
     except Exception as e:
         print(f"Error updating Zabbix configuration: {e}")
         # Restore backup if it exists
-        if os.path.exists(backup_file):
-            shutil.copy2(backup_file, config_file)
+        if os.path.exists(os.path.join(backup_dir, "zabbix_agentd.conf")):
+            shutil.move(os.path.join(backup_dir, "zabbix_agentd.conf"), config_file)
             print("Restored configuration from backup")
         return False
 

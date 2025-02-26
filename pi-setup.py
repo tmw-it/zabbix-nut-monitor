@@ -96,17 +96,6 @@ def install_and_configure_zabbix():
         sys.exit(4)
     print("✓ Zabbix agent installed successfully")
 
-    # Create lib directory and backup default configs
-    print("\n=== Backing up default Zabbix configuration ===")
-    try:
-        os.makedirs("/etc/zabbix/lib", exist_ok=True)
-        if os.path.exists("/etc/zabbix/zabbix_agentd.conf"):
-            shutil.move("/etc/zabbix/zabbix_agentd.conf", "/etc/zabbix/lib/")
-            print("✓ Moved default zabbix_agentd.conf to lib directory")
-    except Exception as e:
-        print(f"Error backing up Zabbix configuration: {e}")
-        sys.exit(4)
-
     print("\n=== Configuring Zabbix ===")
     if not run_command("python3 zabbix/zabbix-config.py",
                       "Failed to configure Zabbix"):
@@ -122,21 +111,6 @@ def install_and_configure_nut():
         print("NUT installation failed")
         sys.exit(6)
     print("✓ NUT installed successfully")
-
-    # Create lib directory and backup default configs
-    print("\n=== Backing up default NUT configuration ===")
-    try:
-        os.makedirs("/etc/nut/lib", exist_ok=True)
-        # Move all files from /etc/nut to /etc/nut/lib except the lib directory itself
-        for item in os.listdir("/etc/nut"):
-            if item != "lib":
-                src = os.path.join("/etc/nut", item)
-                dst = os.path.join("/etc/nut/lib", item)
-                shutil.move(src, dst)
-        print("✓ Moved default NUT configuration files to lib directory")
-    except Exception as e:
-        print(f"Error backing up NUT configuration: {e}")
-        sys.exit(6)
 
     print("\n=== Configuring NUT ===")
     if not run_command("python3 nut/nut-config.py",
