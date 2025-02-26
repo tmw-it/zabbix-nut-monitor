@@ -1,13 +1,6 @@
 # NUT Configuration Values
 # Customize these values for your environment
 
-# UPS device names
-ups1: "ups1"
-ups2: "ups2"
-
-# Location information
-room: "Server Room"
-
 # Vendor ID mappings
 # Format: USB vendor ID (lowercase) : Vendor name
 # Verified against DeviceHunt USB Vendor Database
