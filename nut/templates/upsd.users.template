@@ -36,4 +36,26 @@ $USER_CONFIG
 #
 # User Configuration Details
 # -------------------------
-[... rest of the existing reference documentation ...] 
+# [username]      The username for this user
+#
+# password        The password for this user. Case-sensitive.
+#                Example: password = mypass
+#
+# actions         Optional: Let the user do certain things with the UPS.
+#                Valid actions: SET, FSD
+#                - SET: change UPS variables, instant commands
+#                - FSD: set forced shutdown
+#                Example: actions = SET
+#
+# instcmds       Optional: Let the user initiate specific commands.
+#                Either specify ALL for all commands, or list them:
+#                Examples:
+#                   instcmds = ALL
+#                   instcmds = test.battery.start
+#                   instcmds = test.battery.stop test.battery.start
+#
+# upsmon         Required for monitoring: Set the user's monitoring level
+#                - primary: This system will shutdown last, allowing
+#                          other systems to shutdown first
+#                - secondary: This system shuts down immediately
+#                Example: upsmon primary 

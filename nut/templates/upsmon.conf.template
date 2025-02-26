@@ -13,7 +13,7 @@
 # --------------------------------------------------------------------------
 # QUICK REFERENCE
 # --------------------------------------------------------------------------
-# MONITOR <system> <powervalue> <username> <password> ("primary"|"secondary")
+# MONITOR <s> <powervalue> <username> <password> ("primary"|"secondary")
 # - system: UPS identifier in form <upsname>@<hostname>[:<port>]
 # - powervalue: Number of power supplies this UPS feeds (usually 1)
 # - username/password: Must match upsd.users entry
@@ -46,4 +46,53 @@ FINALDELAY 5
 #
 # MONITOR Configuration Details
 # ---------------------------
-[... rest of the existing reference documentation ...] 
+# MONITOR <system> <powervalue> <username> <password> <type>
+#
+# system     : UPS identifier - <upsname>@<hostname>[:<port>]
+# powervalue : Number of power supplies that this UPS feeds the system
+#             (default: 1)
+# username   : Username from upsd.users
+# password   : Password from upsd.users
+# type       : Type of system:
+#             - primary: Shutdown last, allowing other systems to go first
+#             - secondary: Shutdown immediately when power is critical
+#
+# Example: MONITOR myups@localhost 1 monuser pass primary
+#
+# Other Configuration Options
+# -------------------------
+# MINSUPPLIES <num>
+#   Minimum number of power supplies that must be receiving power to keep
+#   this system running (default: 1)
+#
+# SHUTDOWNCMD "<command>"
+#   Command to run when power is critical
+#   Default: "/sbin/shutdown -h +0"
+#
+# NOTIFYCMD "<command>"
+#   Command to run to send messages when things happen
+#   Example: NOTIFYCMD "/usr/local/ups/bin/notifyme"
+#
+# POLLFREQ <num>
+#   Interval (in seconds) at which upsmon polls the UPS
+#   Default: 5
+#
+# POLLFREQALERT <num>
+#   Interval (in seconds) at which upsmon polls the UPS when on battery
+#   Default: 5
+#
+# HOSTSYNC <num>
+#   Interval (in seconds) to wait before giving up on other systems
+#   shutting down first (default: 15)
+#
+# DEADTIME <num>
+#   Interval (in seconds) before marking UPS as dead/unavailable
+#   Default: 15
+#
+# POWERDOWNFLAG <file>
+#   Flag file for shutting down UPS
+#   Default: /etc/killpower
+#
+# FINALDELAY <num>
+#   Time in seconds to wait after shutdown command before killing power
+#   Default: 5 
