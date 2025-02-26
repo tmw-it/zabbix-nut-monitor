@@ -1,0 +1,28 @@
+# Python packages
+PyYAML>=6.0.1
+bcrypt>=4.1.2
+
+# Network UPS Tools (NUT)
+nut-server  # Core NUT server package
+nut-client  # NUT client tools and monitoring
+usbutils    # For USB device detection (lsusb)
+
+# Zabbix
+zabbix-agent2  # Zabbix agent version 2
+zabbix-agent2-plugin-*  # All standard plugins for agent2
+
+# Note: Package names may vary by distribution. For example:
+# - Debian/Ubuntu: nut-server, nut-client
+# - RHEL/CentOS: nut, nut-client
+# - Alpine: nut, nut-client
+#
+# Installation commands by distribution:
+#
+# Debian/Ubuntu:
+# apt-get install nut-server nut-client usbutils zabbix-agent2
+#
+# RHEL/CentOS:
+# dnf install nut nut-client usbutils zabbix-agent2
+#
+# Alpine:
+# apk add nut nut-client usbutils zabbix-agent2 
