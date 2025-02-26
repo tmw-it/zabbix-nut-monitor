@@ -56,7 +56,7 @@ zabbix_export:
               uuid: 68d44e57a2684e9281ede41e6232e2a2
               name: '{#UPSNAME} 6 - Nominal Battery Voltage'
               key: 'upsmon[{#UPSNAME},battery.voltage.nominal]'
-              delay: '30'
+              delay: '86400'
               value_type: FLOAT
               units: Volts
               tags:
@@ -90,7 +90,7 @@ zabbix_export:
               uuid: 3ad0adb99ac44410ae3e20abb4268820
               name: '{#UPSNAME} 1 - Model'
               key: 'upsmon[{#UPSNAME},device.model]'
-              delay: '3600'
+              delay: '86400'
               value_type: TEXT
               tags:
                 -
