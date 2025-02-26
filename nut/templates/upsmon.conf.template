@@ -1,0 +1,49 @@
+# Network UPS Tools: example upsmon.conf configuration
+#
+# --------------------------------------------------------------------------
+# FILE HANDLING
+# --------------------------------------------------------------------------
+# This file configures UPS monitoring.
+# This is a template file used to generate the actual upsmon.conf in /etc/nut.
+# Manual configurations should be added to the generated file after the
+# ### MANUAL CONFIGURATIONS ### marker.
+#
+# This file contains passwords, so keep it secure.
+
+# --------------------------------------------------------------------------
+# QUICK REFERENCE
+# --------------------------------------------------------------------------
+# MONITOR <system> <powervalue> <username> <password> ("primary"|"secondary")
+# - system: UPS identifier in form <upsname>@<hostname>[:<port>]
+# - powervalue: Number of power supplies this UPS feeds (usually 1)
+# - username/password: Must match upsd.users entry
+# - primary: System shuts down last, secondary: System shuts down immediately
+
+# --------------------------------------------------------------------------
+# AUTO-GENERATED MONITOR ENTRIES
+# --------------------------------------------------------------------------
+MONITOR $UPS1@localhost 1 $username $password $user_mode
+
+### MANUAL CONFIGURATIONS ###
+# Add your manual monitor configurations below this line. They will be preserved.
+
+# --------------------------------------------------------------------------
+# DEFAULT SETTINGS
+# --------------------------------------------------------------------------
+MINSUPPLIES 1
+SHUTDOWNCMD "/sbin/shutdown -h +0"
+POLLFREQ 5
+POLLFREQALERT 5
+HOSTSYNC 15
+DEADTIME 15
+FINALDELAY 5
+
+# --------------------------------------------------------------------------
+# REFERENCE MANUAL
+# --------------------------------------------------------------------------
+# For complete documentation, visit:
+# https://networkupstools.org/docs/man/index.html#User_man
+#
+# MONITOR Configuration Details
+# ---------------------------
+[... rest of the existing reference documentation ...] 

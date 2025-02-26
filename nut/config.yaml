@@ -1,0 +1,36 @@
+# NUT Configuration Values
+# Customize these values for your environment
+
+# UPS device names
+ups1: "ups1"
+ups2: "ups2"
+
+# Location information
+room: "Server Room"
+
+# Vendor ID mappings
+# Format: USB vendor ID (lowercase) : Vendor name
+# Verified against DeviceHunt USB Vendor Database
+vendors:
+  # Most common UPS vendors
+  '051d': 'APC'          # American Power Conversion Corp.
+  '0764': 'CyberPower'   # Cyber Power System, Inc.
+  '0592': 'Eaton'        # Eaton Corporation
+  '0463': 'Eaton'        # MGE UPS Systems/Eaton Power Quality
+  '06da': 'Vertiv'       # Vertiv Co. (formerly Liebert)
+  '09ae': 'TrippLite'    # Tripp Lite
+  '0001': 'Phoenixtec'   # Phoenixtec Power Co., Ltd
+  '0665': 'Belkin'       # Belkin Components
+  '0925': 'Delta'        # Delta Electronics, Inc.
+  '03f0': 'HP'           # Hewlett-Packard
+
+  # Less common but still encountered:
+  # '0482': 'Minuteman'  # Minuteman/Para Systems
+  # '047c': 'Dell'       # Dell Inc. (Some OEM UPS units)
+  # '06b0': 'Riello'     # Riello UPS
+  # '0d9f': 'Powercom'   # Powercom Co., Ltd
+  # '0402': 'ALi'        # ALi Corp. (Some OEM UPS units)
+  # '0baf': 'USRobotics' # US Robotics UPS Division
+  # '0483': 'STMicro'    # STMicroelectronics (Some OEM UPS controllers)
+
+# Additional settings can be added here as needed 

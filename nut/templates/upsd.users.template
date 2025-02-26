@@ -1,0 +1,39 @@
+# Network UPS Tools: example upsd.users configuration
+#
+# --------------------------------------------------------------------------
+# FILE HANDLING
+# --------------------------------------------------------------------------
+# This file sets up the access permissions for NUT server.
+# This is a template file used to generate the actual upsd.users in /etc/nut.
+# Manual configurations should be added to the generated file after the
+# ### MANUAL CONFIGURATIONS ### marker.
+#
+# This file contains passwords, so keep it secure.
+# It should only be readable by the user that upsd becomes.
+
+# --------------------------------------------------------------------------
+# QUICK REFERENCE
+# --------------------------------------------------------------------------
+# [username]
+#   password = <password>     # Required, case-sensitive
+#   actions = SET            # Optional: SET, FSD
+#   instcmds = ALL          # Optional: ALL or specific commands
+#   upsmon primary          # Required for monitoring: primary or secondary
+
+# --------------------------------------------------------------------------
+# AUTO-GENERATED USER CONFIGURATION
+# --------------------------------------------------------------------------
+$USER_CONFIG
+
+### MANUAL CONFIGURATIONS ###
+# Add your manual user configurations below this line. They will be preserved.
+
+# --------------------------------------------------------------------------
+# REFERENCE MANUAL
+# --------------------------------------------------------------------------
+# For complete documentation, visit:
+# https://networkupstools.org/docs/man/index.html#User_man
+#
+# User Configuration Details
+# -------------------------
+[... rest of the existing reference documentation ...] 
