@@ -4,6 +4,7 @@ Requirements:
 - Network UPS Tools (NUT) installed and configured
 - Zabbix agent installed
 - Zabbix server 6.4 or later
+- Python 3.x with PyYAML and bcrypt modules
 
 This template will automatically discover any UPS devices monitored by NUT and begin collecting data including:
 - Battery charge level
@@ -25,10 +26,10 @@ Clone this repo & cd into the new directory
 
 `git clone https://github.com/tmw-it/zabbix-nut-monitor && cd zabbix-nut-monitor/`
 
+### Zabbix Configuration
 Copy configuration files into /etc/zabbix/
 
 ```bash
-sudo cp -r sh/ /etc/zabbix/
 sudo cp -r zabbix/* /etc/zabbix/
 ```
 
@@ -46,7 +47,7 @@ Restart Zabbix agent to apply changes:
 sudo systemctl restart zabbix-agent
 ```
 
-Import the Zabbix template:
+### Import Zabbix Template
 
 1. Log into your Zabbix web interface
 2. Navigate to Configuration > Templates
@@ -54,7 +55,7 @@ Import the Zabbix template:
 4. Upload the `zabbix_nut_template.yaml` file from this repository
 5. Click "Import"
 
-Link the template to your host:
+### Link Template to Host
 
 1. Go to Configuration > Hosts
 2. Click on your host
@@ -64,7 +65,7 @@ Link the template to your host:
 6. Select it and click "Add"
 7. Click "Update" to save changes
 
-Verify Setup:
+### Verify Setup
 
 1. Wait a few minutes for discovery to occur
 2. Check Configuration > Hosts > your host > Latest data
