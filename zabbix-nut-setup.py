@@ -2,12 +2,10 @@
 
 """
 Raspberry Pi Setup Script for Zabbix NUT Monitor
-This script performs initial system setup and orchestrates the configuration
-of Zabbix Agent and Network UPS Tools (NUT).
+This script orchestrates the configuration of Zabbix Agent and Network UPS Tools (NUT).
 
 Exit Codes:
     1: Script not run as root
-    2: System update failed
     3: Dependencies installation failed
     4: Zabbix agent installation failed
     5: Zabbix configuration failed
@@ -27,7 +25,7 @@ def check_root():
     """Check if script is running with root privileges."""
     if os.geteuid() != 0:
         print("This script must be run as root (sudo).")
-        print("Please run: sudo python3 pi-setup.py")
+        print("Please run: sudo python3 zabbix-nut-setup.py")
         sys.exit(1)
 
 def run_command(command, error_msg=None):
@@ -49,20 +47,9 @@ def run_command(command, error_msg=None):
         print(f"Command failed: {e.stderr}")
         return False
 
-def system_update():
-    """Perform system update and upgrade."""
-    print("\n=== Step 1: Updating System ===")
-    if not run_command("apt-get update", "Failed to update package list"):
-        print("System update failed")
-        sys.exit(2)
-    if not run_command("apt-get upgrade -y", "Failed to upgrade packages"):
-        print("System upgrade failed")
-        sys.exit(2)
-    print("✓ System update completed successfully")
-
 def install_dependencies():
     """Install required Python and system packages."""
-    print("\n=== Step 2: Installing Dependencies ===")
+    print("\n=== Step 1: Installing Dependencies ===")
     packages = [
         "python3",
         "python3-pip",
@@ -79,7 +66,7 @@ def install_dependencies():
 
 def install_and_configure_zabbix():
     """Install and configure Zabbix Agent."""
-    print("\n=== Step 3: Installing Zabbix Agent 7.0 ===")
+    print("\n=== Step 2: Installing Zabbix Agent 7.0 ===")
     
     # Add Zabbix 7.0 repository for Ubuntu
     if not run_command(
@@ -105,7 +92,7 @@ def install_and_configure_zabbix():
 
 def install_and_configure_nut():
     """Install and configure Network UPS Tools."""
-    print("\n=== Step 4: Installing NUT ===")
+    print("\n=== Step 3: Installing NUT ===")
     if not run_command("apt-get install -y nut nut-client",
                       "Failed to install NUT"):
         print("NUT installation failed")
@@ -121,7 +108,7 @@ def install_and_configure_nut():
 
 def schedule_reboot():
     """Schedule system reboot with countdown."""
-    print("\n=== Step 5: Setup Complete - Scheduling Reboot ===")
+    print("\n=== Step 4: Setup Complete - Scheduling Reboot ===")
     print("System will reboot in 30 seconds.")
     print("Press Enter to reboot now, or any other key to cancel.")
     
@@ -157,7 +144,6 @@ def main():
         check_root()
         
         # Execute steps in order
-        system_update()
         install_dependencies()
         install_and_configure_zabbix()
         install_and_configure_nut()
