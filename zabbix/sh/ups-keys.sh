@@ -40,7 +40,7 @@ if [[ $key = ups.status ]]; then
         esac
 else
         for upsname in `upsc -l $host 2>&1 | grep -v SSL`; do
-            upsc $upsname ups.status 2>&1 | grep -v SSL
+            upsc $upsname $key 2>&1 | grep -v SSL
         done
 fi
 
