@@ -28,19 +28,25 @@ def check_root():
         print("Please run: sudo python3 zabbix-nut-setup.py")
         sys.exit(1)
 
-def run_command(command, error_msg=None):
+def run_command(command, error_msg=None, interactive=False):
     """Run a shell command and handle errors."""
     try:
-        process = subprocess.run(
-            command,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-        print(process.stdout)
-        return True
+        if interactive:
+            # For interactive commands, use subprocess.call with inherited stdin/stdout/stderr
+            result = subprocess.call(command, shell=True)
+            return result == 0
+        else:
+            # For non-interactive commands, use subprocess.run as before
+            process = subprocess.run(
+                command,
+                shell=True,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+            print(process.stdout)
+            return True
     except subprocess.CalledProcessError as e:
         if error_msg:
             print(f"Error: {error_msg}")
@@ -85,7 +91,8 @@ def install_and_configure_zabbix():
 
     print("\n=== Configuring Zabbix ===")
     if not run_command("python3 zabbix/zabbix-config.py",
-                      "Failed to configure Zabbix"):
+                      "Failed to configure Zabbix",
+                      interactive=True):
         print("Zabbix configuration failed")
         sys.exit(5)
     print("✓ Zabbix configured successfully")
@@ -101,7 +108,8 @@ def install_and_configure_nut():
 
     print("\n=== Configuring NUT ===")
     if not run_command("python3 nut/nut-config.py",
-                      "Failed to configure NUT"):
+                      "Failed to configure NUT",
+                      interactive=True):
         print("NUT configuration failed")
         sys.exit(7)
     print("✓ NUT configured successfully")
@@ -146,8 +154,8 @@ def main():
         # Execute steps in order
         install_dependencies()
         install_and_configure_zabbix()
-        install_and_configure_nut()
-        schedule_reboot()
+        #install_and_configure_nut()
+        #schedule_reboot()
         
     except KeyboardInterrupt:
         print("\nSetup interrupted by user.")

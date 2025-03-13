@@ -61,22 +61,37 @@ def get_hostname():
 
 def get_zabbix_server_ip():
     """Prompt user for Zabbix server/proxy IP address."""
+    print("» Starting Zabbix server configuration...")
+    sys.stdout.flush()  # Force flush the output
     while True:
+        print("» Waiting for Zabbix server IP input...")
+        sys.stdout.flush()  # Force flush the output
         server_ip = input("\nEnter Zabbix Server/Proxy IP address: ").strip()
         try:
             # Validate IP address format
             socket.inet_aton(server_ip)
+            print(f"✓ Received valid IP: {server_ip}")
+            sys.stdout.flush()  # Force flush the output
             return server_ip
         except socket.error:
-            print("Invalid IP address format. Please try again.")
+            print("✗ Invalid IP address format. Please try again.")
+            sys.stdout.flush()  # Force flush the output
 
 def configure_zabbix_agent():
     """Configure Zabbix agent settings."""
     print("\n=== Configuring Zabbix Agent ===")
+    print("» Starting agent configuration...")
+    sys.stdout.flush()  # Force flush the output
     
     # Get system information
     host_ip = get_host_ip()
+    print(f"✓ Detected host IP: {host_ip}")
+    sys.stdout.flush()  # Force flush the output
+    
     hostname = get_hostname()
+    print(f"✓ Detected hostname: {hostname}")
+    sys.stdout.flush()  # Force flush the output
+    
     server_ip = get_zabbix_server_ip()
     
     # Create backup directory if it doesn't exist
@@ -85,12 +100,29 @@ def configure_zabbix_agent():
     
     # Move original config to backup directory
     config_file = "/etc/zabbix/zabbix_agentd.conf"
+    backup_file = os.path.join(backup_dir, "zabbix_agentd.conf")
+    
     if os.path.exists(config_file):
-        shutil.move(config_file, os.path.join(backup_dir, "zabbix_agentd.conf"))
-        print(f"✓ Moved original config to backup directory: {backup_dir}/zabbix_agentd.conf")
+        shutil.copy2(config_file, backup_file)
+        print(f"✓ Backed up original config to: {backup_file}")
     
     # Update configuration
     try:
+        # Check if config file exists, if not create it with default content
+        if not os.path.exists(config_file):
+            print("Config file not found, creating a new one with default settings")
+            default_config = [
+                "PidFile=/var/run/zabbix/zabbix_agentd.pid\n",
+                "LogFile=/var/log/zabbix/zabbix_agentd.log\n",
+                "LogFileSize=0\n",
+                "Server=127.0.0.1\n",
+                "ServerActive=127.0.0.1\n",
+                "Hostname=localhost\n",
+                "Include=/etc/zabbix/zabbix_agentd.d/*.conf\n"
+            ]
+            with open(config_file, 'w') as f:
+                f.writelines(default_config)
+        
         with open(config_file, 'r') as f:
             config_lines = f.readlines()
         
@@ -123,8 +155,8 @@ def configure_zabbix_agent():
     except Exception as e:
         print(f"Error updating Zabbix configuration: {e}")
         # Restore backup if it exists
-        if os.path.exists(os.path.join(backup_dir, "zabbix_agentd.conf")):
-            shutil.move(os.path.join(backup_dir, "zabbix_agentd.conf"), config_file)
+        if os.path.exists(backup_file):
+            shutil.move(backup_file, config_file)
             print("Restored configuration from backup")
         return False
 
